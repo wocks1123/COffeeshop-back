@@ -66,7 +66,7 @@ public class PostService {
         post.addView();
 
         Long count = commentRepository.countByPostId(post.getId());
-        Page<Comment> commentPage = commentRepository.findByPostId(
+        Page<Comment> commentPage = commentRepository.findByPostIdAndIsDeletedFalse(
             PageRequest.of(count.intValue() / 10, 10), post.getId()
         );
 
@@ -90,7 +90,7 @@ public class PostService {
         int page = pageable.getPageNumber();
         int pageLimit = pageable.getPageSize();
 
-        Page<Comment> commentPage = commentRepository.findByPostId(
+        Page<Comment> commentPage = commentRepository.findByPostIdAndIsDeletedFalse(
             PageRequest.of(page, pageLimit), post.getId()
         );
 

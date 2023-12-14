@@ -1,7 +1,5 @@
 package com.wocks.coffeeshopback.post.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -18,12 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//import com.wocks.coffeeshopback.common.annotation.CurrentUser;
 import com.wocks.coffeeshopback.comment.dto.CommentPageDto;
-import com.wocks.coffeeshopback.common.annotation.LoginRequired;
 import com.wocks.coffeeshopback.common.response.ResponseBody;
 import com.wocks.coffeeshopback.jwt.CurrentUser;
-import com.wocks.coffeeshopback.post.domain.Post;
 import com.wocks.coffeeshopback.post.domain.PostType;
 import com.wocks.coffeeshopback.post.dto.PostAddRequestDto;
 import com.wocks.coffeeshopback.post.dto.PostAddResponseDto;
@@ -42,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/posts")
 @RequiredArgsConstructor
 public class PostController {
+
     private final PostService postService;
 
     @PostMapping("/")
@@ -75,7 +71,7 @@ public class PostController {
     @GetMapping("/{id}/comments")
     public ResponseEntity<ResponseBody<?>> getCommentsById(
         @PathVariable("id") Long id,
-        @PageableDefault(page = 0, size=10) Pageable pageable
+        @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
         CommentPageDto responseDto = postService.getComments(id, pageable);
         ResponseBody<CommentPageDto> responseBody = ResponseBody.<CommentPageDto>builder()
@@ -95,7 +91,7 @@ public class PostController {
 
     @GetMapping("/community/")
     public ResponseEntity<ResponseBody<?>> getCommunityPosts(
-        @PageableDefault(page = 0, size=10) Pageable pageable
+        @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
         Page<PostPageResponseDto> responseDto = postService.getPosts(pageable, PostType.Community);
         ResponseBody<Page<?>> responseBody = ResponseBody.<Page<?>>builder()
